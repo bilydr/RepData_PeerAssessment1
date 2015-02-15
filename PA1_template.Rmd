@@ -73,3 +73,6 @@ As one strategy for filling missing values, I plug in average steps for the 5-mi
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+
+
