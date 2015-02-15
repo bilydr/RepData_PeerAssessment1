@@ -8,18 +8,65 @@ output:
 
 ## Loading and preprocessing the data
 
-
+Read the orignial csv file into a data frame and load dplyr package for further analysis
+```{r, echo=TRUE, results='asis', message=FALSE}
+require(dplyr)
+dfOrig <- read.csv("activity.csv", colClasses = c("integer", "Date", "integer"))
+dfOrig <- tbl_df(dfOrig)
+```
 
 ## What is mean total number of steps taken per day?
 
+Calculate the total number of steps taken each day into a new data frame
+```{r}
+dfDay<- dfOrig %>% 
+    group_by(date) %>% 
+    summarize(totalSteps = sum(steps, na.rm = T))
+```
 
+Make a histogram
+```{r}
+hist(dfDay$totalSteps, 
+     main = "Historgram of total number of steps taken each day",
+     xlab = "total steps taken per day")
+```
+
+Calculate the mean and the median
+```{r}
+mean(dfDay$totalSteps)
+median(dfDay$totalSteps)
+```
 
 ## What is the average daily activity pattern?
 
+Calculate the average number of steps taken by 5-min interval into a new data frame
+```{r}
+dfInterval <- dfOrig %>% 
+    group_by(interval) %>% 
+    summarize(avgSteps = mean(steps, na.rm =T))                      
+```
 
+Make a time series plot
+```{r}
+with(dfInterval, plot(interval, avgSteps, 
+                      type = "l",
+                      main = "Average Number of Steps by 5-min Interval",
+                      xlab = "5-min interval",
+                      ylab = "avg. number of steps each day"))
+```
+
+Identify the top interval with highest average steps
+```{r}
+arrange(dfInterval, desc(avgSteps)) [1,]
+```
+It turns out to be the interval from 8h35 to 8h40.
 
 ## Imputing missing values
 
+Find how many NA values that the dataset contains with summary function.
+```{r}
+summary(dfOrig)
+```
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
