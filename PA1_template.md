@@ -103,9 +103,12 @@ summary(dfOrig)
 ##  Max.   :806.00   Max.   :2012-11-30   Max.   :2355.0  
 ##  NA's   :2304
 ```
+<<<<<<< HEAD
 2304 rows contain missing values.
 
 As one strategy for filling missing values, I plug in average steps for the 5-min interval as calculated above.  
+=======
+>>>>>>> 5f569cdecf3372cdcbb0390adcd242b876277c10
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
