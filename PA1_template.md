@@ -194,3 +194,5 @@ with(dfInterval2, xyplot(avgSteps ~ interval | dayofWeek,
 
 The difference between weekdays and weekends is evidently shown: in weekends the steps are relatively taken throughout the daytime while in weekdays the commuting hours, morning and evening, feature the peaks.
 
+
+# Thank you for viewing my work!
