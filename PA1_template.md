@@ -123,7 +123,7 @@ dfDay2<- dfNew %>%
     summarize(totalSteps = sum(steps, na.rm = T))
 ```
 
-Make a histogram
+Make a new histogram
 
 ```r
 hist(dfDay2$totalSteps, 
@@ -133,7 +133,7 @@ hist(dfDay2$totalSteps,
 
 ![](PA1_template_files/figure-html/unnamed-chunk-11-1.png) 
 
-Calculate the mean and the median
+Calculate the new mean and median values
 
 ```r
 mean(dfDay2$totalSteps)
@@ -151,6 +151,46 @@ median(dfDay2$totalSteps)
 ## [1] 10766.19
 ```
 
+Both the mean and median values turn out to be higher than the original ones, which indicates that imputing the missing data has a moderate inflating effect on the estimates of total daily steps.
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+
+```r
+dfNew <- dfNew %>%
+    mutate(dayofWeek = factor(ifelse(weekdays(dfNew$date) %in%
+                                            c("Saturday", "Sunday"), 
+                                        "weekend", 
+                                        "weekday")))
+```
+
+Calculate the average number of steps taken by 5-min interval 
+
+```r
+dfInterval2 <- dfNew %>% 
+    group_by(interval, dayofWeek) %>% 
+    summarize(avgSteps = mean(steps, na.rm =T))                      
+```
+
+Make a panel plot with lattice system 
+
+```r
+require(lattice)
+```
+
+```
+## Loading required package: lattice
+```
+
+```r
+with(dfInterval2, xyplot(avgSteps ~ interval | dayofWeek,
+                         type = "l",
+                         layout = c(1,2),
+                         ylab = "Number of steps",
+                         main = "Average Number of Steps by 5-min Interval"))
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-15-1.png) 
+
+The difference between weekdays and weekends is evidently shown: in weekends the steps are relatively taken throughout the daytime while in weekdays the commuting hours, morning and evening, feature the peaks.
 
