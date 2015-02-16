@@ -108,5 +108,49 @@ summary(dfOrig)
 As one strategy for filling missing values, I plug in average steps for the 5-min interval as calculated above.  
 
 
+```r
+dfNew <- merge(dfOrig, dfInterval) %>% #combine data together
+    tbl_df() %>% #change to data frame tbl format
+    mutate(steps = ifelse(is.na(steps), avgSteps, steps)) %>% 
+    select(steps, date, interval) # keep orginal format
+```
+
+Calculate the total number of steps taken each day
+
+```r
+dfDay2<- dfNew %>% 
+    group_by(date) %>% 
+    summarize(totalSteps = sum(steps, na.rm = T))
+```
+
+Make a histogram
+
+```r
+hist(dfDay2$totalSteps, 
+     main = "Historgram of total number of steps taken each day",
+     xlab = "total steps taken per day")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-11-1.png) 
+
+Calculate the mean and the median
+
+```r
+mean(dfDay2$totalSteps)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
+median(dfDay2$totalSteps)
+```
+
+```
+## [1] 10766.19
+```
+
+
 ## Are there differences in activity patterns between weekdays and weekends?
 
